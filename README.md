@@ -35,7 +35,7 @@ Normalizer maps source severities to a shared scale and canonicalizes labels. Tr
 | `triage` | Python | Public demo API, `POST /incidents` |
 | `normalizer` | JavaScript | Internal service, `POST /normalize` |
 
-The two services exchange JSON over HTTP. Each has a `GET /health` endpoint for process readiness. A gateway request returns HTTP 502 when its dependency is unavailable or fails unexpectedly. Invalid input returns HTTP 400. Domain conflicts return HTTP 409 where supported.
+The two services exchange JSON over HTTP. Each has a `GET /health` endpoint for process readiness. Compose starts the API after the internal service passes its readiness probe. A gateway request returns HTTP 502 when its dependency is unavailable or fails unexpectedly. Invalid input returns HTTP 400. Domain conflicts return HTTP 409 where supported.
 
 ## API example
 

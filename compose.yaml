@@ -9,9 +9,15 @@ services:
       OPERATION_PATH: /incidents
       UPSTREAM_URL: http://normalizer:8081/normalize
     depends_on:
-      - normalizer
+      normalizer:
+        condition: service_healthy
   normalizer:
     build: ./services/normalizer
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8081/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 1s
+      timeout: 2s
+      retries: 20
     environment:
       HOST: 0.0.0.0
       PORT: "8081"
