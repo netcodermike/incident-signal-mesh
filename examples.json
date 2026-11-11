@@ -1,0 +1,53 @@
+{
+  "slug": "incident-signal-mesh",
+  "gateway": [
+    "triage",
+    "/incidents",
+    "Python"
+  ],
+  "worker": [
+    "normalizer",
+    "/normalize",
+    "JavaScript"
+  ],
+  "cases": [
+    [
+      "Group a burst of service alerts",
+      {
+        "signals": [
+          {
+            "id": "a",
+            "service": " CHECKOUT ",
+            "fingerprint": "timeout",
+            "severity": "warning"
+          },
+          {
+            "id": "b",
+            "service": "checkout",
+            "fingerprint": "timeout",
+            "severity": "critical"
+          },
+          {
+            "id": "b",
+            "service": "checkout",
+            "fingerprint": "timeout",
+            "severity": "critical"
+          },
+          {
+            "id": "c",
+            "service": "catalog",
+            "fingerprint": "lag",
+            "severity": "error"
+          }
+        ]
+      },
+      200,
+      {
+        "groups": 2,
+        "top": "checkout / timeout",
+        "topSeverity": "critical",
+        "topSignals": 2
+      }
+    ]
+  ]
+}
